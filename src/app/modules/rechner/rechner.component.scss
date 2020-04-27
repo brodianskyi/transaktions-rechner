@@ -1,0 +1,62 @@
+.main-container {
+    top: 0;
+    bottom: 0;
+    height: 300%;
+    max-height: 300%;
+    background-image: url("/assets/images/HG_standard.gif");
+
+}
+
+.card {
+    background-color: rgb(246,246,246);
+    opacity: 0.9;
+    padding: auto;
+    text-align: center;
+}
+
+.projekt-titel {
+    display: inline-flex;
+}
+
+
+.szenario-wrapper {
+    position: absolute;
+    top: 10px;
+    height: 150px;
+    left: 27px;
+    right: 23px;
+}
+
+.title-button {
+    height: 40px;
+    width: 155px;
+    background-color: black;
+    color: whitesmoke; 
+}
+
+.save-button {
+    background-color: black;
+    color: whitesmoke; 
+}
+
+.title-textfield {
+    height: 50px;
+    width: 250px;
+}
+
+hr.between {
+    border-top: 3px solid black;
+    border-radius: 3px;
+    margin-top: 15px;
+    height: 5px;
+    width: 400px;
+}
+
+hr.main {
+    border-top: 3px solid #bbb;
+    border-radius: 5px;
+    margin-top: 15px;
+    height: 5px;
+    width: 800px;
+  }
+  

@@ -1,0 +1,138 @@
+<div class="main-container">
+    <div fxLayout="column" class="szenario-wrapper" fxLayoutGap="10px">
+        <mat-card class="card">
+            <mat-card-header>
+            </mat-card-header>
+            <mat-card-content>
+                <h1>DNO Cross-Domain Transaktionskosten Rechner <br> (DNO XDTAKRe) </h1>
+                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                    <mat-form-field appearance="fill" class="title-textfield">
+                        <mat-label>Projekttitel</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <button mat-raised-button class="title-button">Projekt anlegen</button>
+                    <button mat-raised-button class="title-button">Reset</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card">
+            <mat-card-content>
+                <h1> Grundeinstellungen Szenario </h1>
+                <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                    <h3> Anzahl Datendomains </h3>
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                        <mat-form-field appearance="fill" class="title-textfield">
+                            <input #input_data_domains matInput type="number" value="2" min="2">
+                        </mat-form-field>
+                        <button (click)="number_data_domains(input_data_domains.value)" mat-raised-button
+                            class="title-button">Anlegen</button>
+                    </div>
+                    <hr class="main">
+                    <div *ngFor="let daten_domain of data_domain_map | keyvalue">
+                        <h3>Anzahl Datensätze für DD#{{daten_domain.key}}</h3>
+                        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <mat-form-field appearance="fill" class="title-textfield">
+                                <input #input_data_sets matInput type="number" value="1" min="1">
+                            </mat-form-field>
+                            <button (click)="number_data_sets(daten_domain.key, input_data_sets.value)"
+                                mat-raised-button class="title-button">Anlegen</button>
+                        </div>
+                    </div>
+                    <hr class="main">
+                    <div *ngFor="let daten_domain of data_domain_map | keyvalue; let number_data_domains = index">
+                        <div *ngFor="let data_set of daten_domain.value; let number_data_sets = index">
+                            <h3>Anzahl Variablen für DS#{{number_data_sets+1}} der DD#{{daten_domain.key}}</h3>
+                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                                <mat-form-field appearance="fill" class="title-textfield">
+                                    <input #input_variables matInput type="number" value="1" min="1">
+                                </mat-form-field>
+                                <button
+                                    (click)="number_variables(daten_domain.key, number_data_sets+1, input_variables.value)"
+                                    mat-raised-button class="title-button">Anlegen</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="main">
+                </div>
+                <hr class="main">
+                <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                    <h3> Anzahl Analysen </h3>
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                        <mat-form-field appearance="fill" class="title-textfield">
+                            <input matInput type="number" value="1" min="1">
+                        </mat-form-field>
+                        <button mat-raised-button class="title-button">Anlegen</button>
+                    </div>
+                    <h3> Anzahl Algorithmen für AN#1 </h3>
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                        <mat-form-field appearance="fill" class="title-textfield">
+                            <input matInput type="number" value="1" min="1">
+                        </mat-form-field>
+                        <button mat-raised-button class="title-button">Anlegen</button>
+                    </div>
+                </div>
+                <hr class="main">
+                <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                    <h3> Anzahl Ergebnispräsentationen </h3>
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                        <mat-form-field appearance="fill" class="title-textfield">
+                            <input matInput type="number" value="1" min="1">
+                        </mat-form-field>
+                        <button mat-raised-button class="title-button">Anlegen</button>
+                    </div>
+                    <h3> Anzahl Präsentationsmodule für EP#1 </h3>
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                        <mat-form-field appearance="fill" class="title-textfield">
+                            <input matInput type="number" value="1" min="1">
+                        </mat-form-field>
+                        <button mat-raised-button class="title-button">Anlegen</button>
+                    </div>
+                </div>
+                <hr class="main">
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card">
+            <h1> Feld 1: Datendomain </h1>
+            <mat-card-content>
+                <div *ngFor="let daten_domain of data_domain_map | keyvalue; let number_data_domains = index">
+                    {{daten_domain.key}} --> {{daten_domain.value}}
+                    <hr class="main">
+                    <h3> Datendomain # {{daten_domain.key}} </h3>
+                    <div *ngFor="let data_set of daten_domain.value; let number_of_data_sets = index">
+                        {{data_set}}
+                        <h3> Datensatz # {{number_of_data_sets+1}}</h3>
+                        <h3> Komplexität Variablen </h3>
+                        <h3> Likert: 1 (Standardisiert) bis 5 (Hochkomplex) </h3>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <div *ngFor="let variable of variables_arr; let number_of_variables = index">
+                                <h3>Var#{{number_of_variables+1}} </h3>
+                                <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
+                                {{variable_slider.value}}
+                            </div>
+                        </div>
+                        <h3>Einzelpreis Variablen</h3>
+                        <h3>Preise in Euro</h3>
+                        <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                            <div *ngFor="let variable of variables_arr; let number_of_variables = index">
+                                <mat-form-field appearance="fill" class="title-textfield">
+                                    <mat-label>Var#{{number_of_variables+1}}</mat-label><input matInput value="0.00">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="between">
+                </div>
+                <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
+                    <button mat-raised-button class="save-button">Eingaben Feld 1 speichern</button>
+                    <button mat-raised-button class="save-button">Reset</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card">
+            <h1> Feld 2: Analyse </h1>
+            <mat-card-content>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
