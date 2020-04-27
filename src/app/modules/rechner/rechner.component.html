@@ -28,30 +28,37 @@
                             class="title-button">Anlegen</button>
                     </div>
                     <hr class="main">
-                    <div *ngFor="let daten_domain of data_domain_map | keyvalue">
-                        <h3>Anzahl Datensätze für DD#{{daten_domain.key}}</h3>
+                   <!-- <div *ngFor="let daten_domain of data_domain_map | keyvalue"> -->
+                    <div *ngFor="let daten_domain of daten_domains_arr; let daten_domain_number = index">  
+                        <!--Anzahl Datensätze für DD#{{daten_domain.key}}-->
+                        <h3>Anzahl Datensätze für DD#{{daten_domain_number+1}}</h3>
                         <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                             <mat-form-field appearance="fill" class="title-textfield">
                                 <input #input_data_sets matInput type="number" value="1" min="1">
                             </mat-form-field>
-                            <button (click)="number_data_sets(daten_domain.key, input_data_sets.value)"
+                            <!--(click)="number_data_sets(daten_domain.key, input_data_sets.value)"-->
+                            <button (click)="number_data_sets(daten_domain_number+1, input_data_sets.value)"
                                 mat-raised-button class="title-button">Anlegen</button>
                         </div>
                     </div>
                     <hr class="main">
-                    <div *ngFor="let daten_domain of data_domain_map | keyvalue; let number_data_domains = index">
-                        <div *ngFor="let data_set of daten_domain.value; let number_data_sets = index">
-                            <h3>Anzahl Variablen für DS#{{number_data_sets+1}} der DD#{{daten_domain.key}}</h3>
+                   <!-- <div *ngFor="let daten_domain of data_domain_map | keyvalue; let number_data_domains = index"> -->
+                    <!-- <div *ngFor="let data_set of daten_domain.value; let number_data_sets = index"> -->
+                        <div *ngFor="let data_set_array of data_sets_arr; let number_data_sets = index">
+                         <!-- Anzahl Variablen für DS#{{number_data_sets+1}} der DD#{{daten_domain.key}} -->  
+                         <h3>Anzahl Variablen für DS#{{number_data_sets+1}} der DD#{{data_domain_id}}</h3>
                             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                                 <mat-form-field appearance="fill" class="title-textfield">
                                     <input #input_variables matInput type="number" value="1" min="1">
                                 </mat-form-field>
+                                <!--(click)="number_variables(daten_domain.key, number_data_sets+1, input_variables.value)"-->
                                 <button
-                                    (click)="number_variables(daten_domain.key, number_data_sets+1, input_variables.value)"
+                                    (click)="number_variables(data_domain_id, number_data_sets, input_variables.value)"
                                     mat-raised-button class="title-button">Anlegen</button>
                             </div>
-                        </div>
-                    </div>
+                        </div>    
+                     <!-- </div> -->
+                   <!-- </div> -->
                     <hr class="main">
                 </div>
                 <hr class="main">
