@@ -29,16 +29,32 @@ export class RechnerComponent {
   }
 
   number_data_sets(data_domain: number, n_data_sets: number) {
-    console.log("data_domain", data_domain, "number data sets", n_data_sets);
+    console.log("#data_domain", data_domain, "kolvo data sets", n_data_sets);
     this.data_domain_id = data_domain;
+    let arr = this.data_domain_map.get(data_domain);
+    console.log("arr", arr);
+    n_data_sets =  Number(n_data_sets);
+    arr.length = n_data_sets;
+    this.data_sets_arr.length = arr.length;
+    console.log("data_sets_arr.length", this.data_sets_arr.length);
+    for (let i = 0; i < arr.length; i++) {
+       if (arr[i]) {
+         console.log("i", i, "arr[i]", arr[i]);
+       } else {
+         arr[i] = 3;
+         console.log("arr[i]", i, "arr[i]", arr[i]);
+       }
+    }
+    this.data_domain_map.set(data_domain, arr);
+    console.log("data_set_map", this.data_domain_map);
+    /*
     this.data_sets_arr.length = n_data_sets;
     let arr = new Array();
     arr.length = n_data_sets;
-    // number of variables by default = 3
     arr.fill(3);
     this.data_domain_map.set(data_domain, arr);
     console.log("data_set_map", this.data_domain_map);
-    //this.data_sets_arr.length = n_data_sets;
+    */
   }
 
   number_variables(n_domain: number, n_data_set: number, n_variables: number) {
@@ -49,7 +65,7 @@ export class RechnerComponent {
     console.log("array in variables", arr);
     // arr.length = n_data_set;
     console.log("change length of arr to", arr.length);
-    arr[n_data_set] = n_variables;
+    arr[n_data_set] = Number(n_variables);
     //arr = arr.fill(n_variables)
     console.log("final array", arr);
     this.data_domain_map.set(n_domain, arr)
