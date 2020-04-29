@@ -6,18 +6,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rechner.component.scss']
 })
 export class RechnerComponent {
+  data_domain_map = new Map([[1, [new Array(3)]], [2, [new Array(3)]]]);
   daten_domains_arr = new Array(2);
   data_sets_arr = new Array(1);
+  // data_sets_arr = new Array(1);
   variables_arr = new Array(1);
-  data_domain_id: number = 1; 
+  data_domain_id: number = 1;
+  height = 290;
+  buffer_height = 0;
   //{"# of data domain", "number of data sets in this data domain"}
   // new Map([[1, Map([[Array_data_set(1), Array_variables(1)],..]),..])
-  data_domain_map = new Map([[1, [new Array(3)]], [2, [new Array(3)]]]);
+ 
 
   constructor() { }
 
 
   number_data_domains(n_data_domains: number) {
+    this.height = n_data_domains * 50;
+    this.height += 290;
+    this.buffer_height = this.height;
+    console.log("height", this.height); 
     this.daten_domains_arr.length = n_data_domains;
     let data_domain_map = new Map();
     let map_length = Number(n_data_domains) + 1;
@@ -30,6 +38,8 @@ export class RechnerComponent {
   }
 
   number_data_sets(data_domain: number, n_data_sets: number) {
+    this.height = this.buffer_height +  Number(n_data_sets) * 70;
+    console.log("--height", this.height);
     console.log("#data_domain", data_domain, "kolvo data sets", n_data_sets);
     this.data_domain_id = data_domain;
     let arr = this.data_domain_map.get(data_domain);

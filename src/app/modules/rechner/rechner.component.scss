@@ -1,10 +1,10 @@
 .main-container {
+    position: relative;
     top: 0;
     bottom: 0;
-    height: 300%;
-    max-height: 300%;
+    // height: 300%;
     background-image: url("/assets/images/HG_standard.gif");
-
+    background-size: 70% 100%;
 }
 
 .card {
@@ -45,18 +45,22 @@
 }
 
 hr.between {
-    border-top: 3px solid black;
-    border-radius: 3px;
+    border-top: 0px solid #bbb;
+    color: #bbb;
     margin-top: 15px;
-    height: 5px;
-    width: 400px;
+    height: 2px;
+    width: 20%;
 }
 
 hr.main {
-    border-top: 3px solid #bbb;
-    border-radius: 5px;
+    border-top: 0px solid #bbb;
+    // border-radius: 5px;
+    color: #bbb;
     margin-top: 15px;
-    height: 5px;
-    width: 800px;
+    height: 2px;
+    width: 40%;
   }
   
+  .preise {
+      padding-top: 20px;
+  }
