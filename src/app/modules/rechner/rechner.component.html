@@ -5,14 +5,14 @@
             </mat-card-header>
             <mat-card-content>
                 <h1>DNO Cross-Domain Transaktionskosten Rechner <br> (DNO XDTAKRe) </h1>
-                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+               <!--  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                     <mat-form-field appearance="fill" class="title-textfield">
                         <mat-label>Projekttitel</mat-label>
                         <input matInput>
                     </mat-form-field>
                     <button mat-raised-button class="title-button">Projekt anlegen</button>
                     <button mat-raised-button class="title-button">Reset</button>
-                </div>
+                </div> -->
             </mat-card-content>
         </mat-card>
         <mat-card class="card">
@@ -111,16 +111,18 @@
                         <h3> Komplexität Variablen </h3>
                         <h3> Likert: 1 (Standardisiert) bis 5 (Hochkomplex) </h3>
                         <div fxLayout="row" fxLayoutAlign="center center">
-                            <div *ngFor="let variable of variables_arr; let number_of_variables = index">
+                            <div *ngFor="let variable of data_set; let number_of_variables = index"> 
+                            <!--<div *ngFor="let variable of "></div> -->
                                 <h3>Var#{{number_of_variables+1}} </h3>
                                 <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
                                 {{variable_slider.value}}
-                            </div>
+                            </div> 
                         </div>
                         <h3>Einzelpreis Variablen</h3>
                         <h3>Preise in Euro</h3>
                         <div fxLayout="row" fxLayoutAlign="space-evenly center">
-                            <div *ngFor="let variable of variables_arr; let number_of_variables = index">
+                           <!-- <div *ngFor="let variable of variables_arr; let number_of_variables = index"> -->
+                            <div *ngFor="let variable of data_set; let number_of_variables = index">  
                                 <mat-form-field appearance="fill" class="title-textfield">
                                     <mat-label>Var#{{number_of_variables+1}}</mat-label><input matInput value="0.00">
                                 </mat-form-field>

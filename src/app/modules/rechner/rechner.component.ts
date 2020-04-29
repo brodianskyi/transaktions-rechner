@@ -12,7 +12,7 @@ export class RechnerComponent {
   data_domain_id: number = 1; 
   //{"# of data domain", "number of data sets in this data domain"}
   // new Map([[1, Map([[Array_data_set(1), Array_variables(1)],..]),..])
-  data_domain_map = new Map([[1, [3]], [2, [3]]]);
+  data_domain_map = new Map([[1, [new Array(3)]], [2, [new Array(3)]]]);
 
   constructor() { }
 
@@ -22,7 +22,8 @@ export class RechnerComponent {
     let data_domain_map = new Map();
     let map_length = Number(n_data_domains) + 1;
     for (let i = 1; i < map_length; i++) {
-      data_domain_map.set(i, Array(1).fill(3));
+      //data_domain_map.set(i, Array(1).fill(3));
+       data_domain_map.set(i, [new Array(3)]);
     }
     this.data_domain_map = data_domain_map;
     console.log("(function number_data_domain) data_domain map", this.data_domain_map);
@@ -41,7 +42,7 @@ export class RechnerComponent {
        if (arr[i]) {
          console.log("i", i, "arr[i]", arr[i]);
        } else {
-         arr[i] = 3;
+         arr[i] = new Array(3);
          console.log("arr[i]", i, "arr[i]", arr[i]);
        }
     }
@@ -65,7 +66,8 @@ export class RechnerComponent {
     console.log("array in variables", arr);
     // arr.length = n_data_set;
     console.log("change length of arr to", arr.length);
-    arr[n_data_set] = Number(n_variables);
+    // arr[n_data_set] = Number(n_variables);
+    arr[n_data_set] = new Array(Number(n_variables));
     //arr = arr.fill(n_variables)
     console.log("final array", arr);
     this.data_domain_map.set(n_domain, arr)
