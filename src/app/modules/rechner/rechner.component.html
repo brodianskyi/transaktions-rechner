@@ -49,7 +49,7 @@
                          <h3>Anzahl Variablen für DS#{{number_data_sets+1}} der DD#{{data_domain_id}}</h3>
                             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                                 <mat-form-field appearance="fill" class="title-textfield">
-                                    <input #input_variables matInput type="number" value="1" min="1">
+                                    <input #input_variables matInput type="number" value="3" min="1">
                                 </mat-form-field>
                                 <!--(click)="number_variables(daten_domain.key, number_data_sets+1, input_variables.value)"-->
                                 <button
@@ -102,7 +102,6 @@
             <h1> Feld 1: Datendomain </h1>
             <mat-card-content>
                 <div *ngFor="let daten_domain of data_domain_map | keyvalue; let number_data_domains = index">
-                    {{daten_domain.key}} --> {{daten_domain.value}}
                     <hr class="main">
                     <h3> Datendomain # {{daten_domain.key}} </h3>
                     <div *ngFor="let data_set of daten_domain.value; let number_of_data_sets = index">
