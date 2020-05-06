@@ -123,7 +123,7 @@
                             <!-- <div *ngFor="let variable of variables_arr; let number_of_variables = index"> -->
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
                                 <mat-form-field appearance="fill" class="title-textfield">
-                                    <mat-label>Var#{{number_of_variables+1}}</mat-label><input matInput value="0.00">
+                                    <mat-label>Var#{{number_of_variables+1}}</mat-label><input #dd_variables matInput (change)="data_domain_var(dd_variables.value, number_of_variables+1)" value="0.00">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                             <h3> AL#{{number_of_algorithms+1}} </h3>
                             <div fxLayout="row" fxLayoutAlign="space-around center">
                                 <div *ngFor="let variable of variables_arr; let number_variable = index">
-                                    <mat-checkbox class="checkbox_algorithms"> VAR#{{number_variable+1}} </mat-checkbox>
+                                    <mat-checkbox (change)="checkbox_algorithms(isChecked?'false':'true', number_variable+1)" class="checkbox_algorithms"> VAR#{{number_variable+1}} </mat-checkbox>
                                 </div>
                             </div>
                         </div>

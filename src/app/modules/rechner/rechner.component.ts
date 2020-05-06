@@ -18,7 +18,7 @@ export class RechnerComponent {
   algorithms_arr = new Array(2);
   analysen_id: number = 1;
   // -----------------------------
-  height = 290;
+  height = 350;
   buffer_height = 0;
 
 
@@ -27,6 +27,9 @@ export class RechnerComponent {
 
   number_analysen(n_analysen: number) {
     console.log("kol_vo analysen", n_analysen);
+    this.height = n_analysen * 50;
+    this.height += 290;
+    this.buffer_height = this.height;
     this.analysen_arr.length = n_analysen;
     let analysen_map = new Map();
     let map_length = Number(n_analysen) + 1;
@@ -38,6 +41,7 @@ export class RechnerComponent {
   }
 
   number_algorithms(analyse: number, n_algorithms: number) {
+    this.height = this.buffer_height + Number(n_algorithms) * 70;
      console.log("#analyse", analyse, "kolvo algorithms", n_algorithms);
      this.analysen_id = analyse;
      let arr = this.analysen_map.get(analyse);
@@ -108,8 +112,22 @@ export class RechnerComponent {
     console.log("data_set_map",  this.data_domain_map);
   }
 
+  checkbox_algorithms(event: any, id_checkbox: number){
+      console.log("event:", event, "id_checkbox", id_checkbox);
+      //console.log("event2", event.target.checked);
+  }
+
+  data_domain_var(dd_value: number, n_variables: number) {
+      console.log("value of domain_variable = ", dd_value, "id_variable=", n_variables);
+  }
+
+  button_click(value: number) {
+    console.log("lllll", value);
+  }
+
+  /*
   track_domain_key(index: any, daten_domain: any) {
     return index;
   }
-
+   */
 }
