@@ -85,16 +85,20 @@
                     <h3> Anzahl Ergebnispräsentationen </h3>
                     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                         <mat-form-field appearance="fill" class="title-textfield">
-                            <input matInput type="number" value="1" min="1">
+                            <input #input_ep matInput type="number" value="1" min="1">
                         </mat-form-field>
-                        <button mat-raised-button class="title-button">Anlegen</button>
+                        <button (click)="number_ep(input_ep.value)" mat-raised-button
+                            class="title-button">Anlegen</button>
                     </div>
-                    <h3> Anzahl Präsentationsmodule für EP#1 </h3>
-                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
-                        <mat-form-field appearance="fill" class="title-textfield">
-                            <input matInput type="number" value="1" min="1">
-                        </mat-form-field>
-                        <button mat-raised-button class="title-button">Anlegen</button>
+                    <div *ngFor="let ep of ep_arr; let ep_number = index">
+                        <h3> Anzahl Präsentationsmodule für EP#{{ep_number+1}} </h3>
+                        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <mat-form-field appearance="fill" class="title-textfield">
+                                <input #input_pm matInput type="number" value="2" min="1">
+                            </mat-form-field>
+                            <button (click)="number_pm(ep_number+1, input_pm.value)" mat-raised-button
+                                class="title-button">Anlegen</button>
+                        </div>
                     </div>
                 </div>
             </mat-card-content>
@@ -123,7 +127,9 @@
                             <!-- <div *ngFor="let variable of variables_arr; let number_of_variables = index"> -->
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
                                 <mat-form-field appearance="fill" class="title-textfield">
-                                    <mat-label>Var#{{number_of_variables+1}}</mat-label><input #dd_variables matInput (change)="data_domain_var(dd_variables.value, number_of_variables+1)" value="0.00">
+                                    <mat-label>Var#{{number_of_variables+1}}</mat-label><input #dd_variables matInput
+                                        (change)="data_domain_var(daten_domain.key, number_of_data_sets+1, number_of_variables+1, dd_variables.value)"
+                                        value="0.00">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -148,7 +154,9 @@
                             <h3> AL#{{number_of_algorithms+1}} </h3>
                             <div fxLayout="row" fxLayoutAlign="space-around center">
                                 <div *ngFor="let variable of variables_arr; let number_variable = index">
-                                    <mat-checkbox (change)="checkbox_algorithms(isChecked?'false':'true', number_variable+1)" class="checkbox_algorithms"> VAR#{{number_variable+1}} </mat-checkbox>
+                                    <mat-checkbox
+                                        (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
+                                        class="checkbox_algorithms"> VAR#{{number_variable+1}} </mat-checkbox>
                                 </div>
                             </div>
                         </div>
@@ -158,6 +166,24 @@
                 <hr class="main" noshade>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
                     <button mat-raised-button class="save-button">Eingaben Feld 2 speichern</button>
+                    <button mat-raised-button class="save-button">Reset</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card">
+            <h1> Feld 3: Ergebnispräsentation </h1>
+            <hr class="main" noshade>
+            <mat-card-content>
+                <div *ngFor="let ep of ep_map | keyvalue; let number_ep = index">
+                    <h2>EP#{{ep.key}}</h2>
+                    <div *ngFor="let pm of ep.value; let number_of_pm = index">
+                        <h3> PM#{{number_of_pm+1}} </h3>
+                    </div>
+                    <hr class="between" noshade>
+                </div>
+                <hr class="main" noshade>
+                <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
+                    <button mat-raised-button class="save-button">Eingaben Feld 3 speichern</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>

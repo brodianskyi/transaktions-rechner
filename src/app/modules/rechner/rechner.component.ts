@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-rechner',
   templateUrl: './rechner.component.html',
@@ -17,7 +18,12 @@ export class RechnerComponent {
   analysen_arr = new Array(1);
   algorithms_arr = new Array(2);
   analysen_id: number = 1;
-  // -----------------------------
+  // --------Ergebnispräsentationen-----
+  ep_map = new Map([[1, new Array(2)]]);
+  ep_arr = new Array(1);
+  pm_arr = new Array(2);
+  ep_id: number = 1;
+  //---------------------------------------
   height = 350;
   buffer_height = 0;
 
@@ -25,8 +31,43 @@ export class RechnerComponent {
 
   constructor() { }
 
+  // --------Ergebnispräsentationen-----
+  number_ep(n_ep: number) {
+    console.log("kol_vo ep", n_ep);
+    this.height = n_ep * 50;
+    this.height += 290;
+    this.buffer_height = this.height;
+    this.ep_arr.length = n_ep;
+    let ep_map = new Map();
+    let map_length = Number(n_ep) + 1;
+    for (let i = 1; i < map_length; i++) {
+      ep_map.set(i, new Array(2));
+    }
+    this.ep_map = ep_map;
+    console.log("(function number_ep) ep_map", this.ep_map);
+  }
+
+  number_pm(ep: number, n_pm: number) {
+    this.height = this.buffer_height + Number(n_pm) * 70;
+    this.ep_id = ep;
+    let arr = this.ep_map.get(ep);
+    n_pm = Number(n_pm);
+    arr.length = n_pm;
+    this.pm_arr.length = arr.length;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i]) {
+
+      } else {
+        arr[i] = new Array(2);
+      }
+    }
+    this.ep_map.set(ep, arr);
+    console.log("Ergeb_psentation_map", this.ep_map);
+  }
+
+  // -------Amalyse-----------------
   number_analysen(n_analysen: number) {
-    console.log("kol_vo analysen", n_analysen);
+    //console.log("kol_vo analysen", n_analysen);
     this.height = n_analysen * 50;
     this.height += 290;
     this.buffer_height = this.height;
@@ -42,26 +83,26 @@ export class RechnerComponent {
 
   number_algorithms(analyse: number, n_algorithms: number) {
     this.height = this.buffer_height + Number(n_algorithms) * 70;
-     console.log("#analyse", analyse, "kolvo algorithms", n_algorithms);
-     this.analysen_id = analyse;
-     let arr = this.analysen_map.get(analyse);
-     console.log("arr", arr);
-     n_algorithms = Number(n_algorithms);
-     arr.length = n_algorithms;
-     this.algorithms_arr.length = arr.length;
-     console.log("algorithms_arr.length", this.algorithms_arr.length);
-     for (let i = 0; i < arr.length; i++) {
-        if (arr[i]) {
+    //console.log("#analyse", analyse, "kolvo algorithms", n_algorithms);
+    this.analysen_id = analyse;
+    let arr = this.analysen_map.get(analyse);
+    //console.log("arr", arr);
+    n_algorithms = Number(n_algorithms);
+    arr.length = n_algorithms;
+    this.algorithms_arr.length = arr.length;
+    //console.log("algorithms_arr.length", this.algorithms_arr.length);
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i]) {
 
-        } else {
-          arr[i] = new Array(2);
-        }
-     } 
-     this.analysen_map.set(analyse, arr);
-     console.log("analysen_map", this.analysen_map);
+      } else {
+        arr[i] = new Array(2);
+      }
+    }
+    this.analysen_map.set(analyse, arr);
+    console.log("analysen_map", this.analysen_map);
   }
 
-
+  // --------Data Domain------------
   number_data_domains(n_data_domains: number) {
     this.height = n_data_domains * 50;
     this.height += 290;
@@ -109,16 +150,15 @@ export class RechnerComponent {
     arr[n_data_set] = new Array(Number(n_variables));
     //console.log("final array", arr);
     this.data_domain_map.set(n_domain, arr)
-    console.log("data_set_map",  this.data_domain_map);
+    console.log("data_set_map", this.data_domain_map);
+  }
+  // event.checked
+  checkbox_algorithms(analyse: number, algorithm: number, variable: number, event: any) {
+    console.log("analyse_id=", analyse, "algorithmus_id=", algorithm, "var_id=", variable, "is checked=", event.checked);
   }
 
-  checkbox_algorithms(event: any, id_checkbox: number){
-      console.log("event:", event, "id_checkbox", id_checkbox);
-      //console.log("event2", event.target.checked);
-  }
-
-  data_domain_var(dd_value: number, n_variables: number) {
-      console.log("value of domain_variable = ", dd_value, "id_variable=", n_variables);
+  data_domain_var(daten_domain: number, data_set: number, variable: number, dd_value: number) {
+    console.log("daten_domain = ", daten_domain, "data_set=", data_set, "variable_number", variable, "value", dd_value);
   }
 
   button_click(value: number) {
