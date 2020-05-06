@@ -10,7 +10,7 @@ export class RechnerComponent {
   data_domain_map = new Map([[1, [new Array(3)]], [2, [new Array(3)]]]);
   daten_domains_arr = new Array(2);
   data_sets_arr = new Array(1);
-  variables_arr = new Array(1);
+  variables_arr = new Array(3);
   data_domain_id: number = 1;
   // -------Amalyse-----------------
   analysen_map = new Map([[1, new Array(2)]]);
@@ -105,7 +105,7 @@ export class RechnerComponent {
     arr[n_data_set] = new Array(Number(n_variables));
     //console.log("final array", arr);
     this.data_domain_map.set(n_domain, arr)
-    //console.log("data_set_map_new",  this.data_domain_map);
+    console.log("data_set_map",  this.data_domain_map);
   }
 
   track_domain_key(index: any, daten_domain: any) {

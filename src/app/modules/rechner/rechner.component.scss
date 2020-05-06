@@ -1,10 +1,13 @@
 .main-container {
+    // position: sticky;
     position: relative;
     top: 0;
     bottom: 0;
     // height: 300%;
     background-image: url("/assets/images/HG_standard.gif");
-    background-size: 70% 100%;
+    // background-size: 70% 100%;
+    background-attachment: fixed, scroll;
+    background-repeat: no-repeat, repeat-y;
 }
 
 .card {
@@ -63,4 +66,8 @@ hr.main {
   
   .preise {
       padding-top: 20px;
+  }
+
+  .checkbox_algorithms {
+      padding-left: 20px;
   }

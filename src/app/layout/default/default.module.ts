@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatSliderModule } from '@angular/material/slider';
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    MatSliderModule 
+    MatSliderModule,
+    MatCheckboxModule 
   ]
 })
 export class DefaultModule { }
