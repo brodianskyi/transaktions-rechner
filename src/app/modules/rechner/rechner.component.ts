@@ -17,6 +17,9 @@ export class RechnerComponent {
   analysen_map = new Map([[1, new Array(2)]]);
   analysen_arr = new Array(1);
   algorithms_arr = new Array(2);
+  variables_arr_anlysen =
+    ["1.1.1", "1.1.2", "1.1.3",
+      "2.1.1", "2.1.2", "2.1.3"];
   analysen_id: number = 1;
   // --------Ergebnispräsentationen-----
   ep_map = new Map([[1, new Array(2)]]);
@@ -107,15 +110,38 @@ export class RechnerComponent {
     this.height = n_data_domains * 50;
     this.height += 290;
     this.buffer_height = this.height;
-    //console.log("height", this.height); 
+    //----------------------------
+    let buff_arr = new Array(3); 
     this.daten_domains_arr.length = n_data_domains;
     let data_domain_map = new Map();
     let map_length = Number(n_data_domains) + 1;
     for (let i = 1; i < map_length; i++) {
-      data_domain_map.set(i, [new Array(3)]);
+        data_domain_map.set(i, [buff_arr]);
     }
     this.data_domain_map = data_domain_map;
+    this.set_variable_numbers(this.data_domain_map);
     // console.log("(function number_data_domain) data_domain map", this.data_domain_map);
+  }
+
+  // new Map([[1, [new Array(3)]], [2, [new Array(3)]]])
+  set_variable_numbers(buff_map: Map<any, any>) {
+    console.log("***********************************");
+    let buff_arr = new Array();
+    let count_ds = 0, count_var = 0;
+    for (let [key, value] of buff_map) {
+      count_ds = 0, count_var = 0;
+      for (let data_set of value) {
+        count_ds++; count_var = 0;
+        for (let variable of data_set) {
+          count_var++;
+          //console.log(String(key)+"."+String(count_ds)+"."+String(count_var));
+          buff_arr.push(String(key)+"."+String(count_ds)+"."+String(count_var));
+          //variables_arr_anlysen.push(String(key+"."+i));   
+        }
+      }
+    }
+    this.variables_arr_anlysen = buff_arr;
+    console.log("--", this.variables_arr_anlysen);
   }
 
   number_data_sets(data_domain: number, n_data_sets: number) {
@@ -138,11 +164,13 @@ export class RechnerComponent {
       }
     }
     this.data_domain_map.set(data_domain, arr);
+    this.set_variable_numbers(this.data_domain_map);
     //console.log("data_set_map", this.data_domain_map);
   }
 
   number_variables(n_domain: number, n_data_set: number, n_variables: number) {
-    //console.log("#domain", n_domain, "#n_data_set", n_data_set+1, "kol_vo_variables", n_variables);
+    console.log("#domain", n_domain, "#n_data_set", n_data_set + 1, "kol_vo_variables", n_variables);
+    this.variables_arr
     //console.log("data_set_map",  this.data_domain_map);
     let arr = this.data_domain_map.get(n_domain);
     //console.log("array in variables", arr);
@@ -151,6 +179,7 @@ export class RechnerComponent {
     //console.log("final array", arr);
     this.data_domain_map.set(n_domain, arr)
     console.log("data_set_map", this.data_domain_map);
+    this.set_variable_numbers(this.data_domain_map);
   }
   // event.checked
   checkbox_algorithms(analyse: number, algorithm: number, variable: number, event: any) {
@@ -158,7 +187,7 @@ export class RechnerComponent {
   }
 
   data_domain_var(daten_domain: number, data_set: number, variable: number, dd_value: number) {
-    console.log("daten_domain = ", daten_domain, "data_set=", data_set, "variable_number", variable, "value", dd_value);
+    //console.log("daten_domain = ", daten_domain, "data_set=", data_set, "variable_number", variable, "value", dd_value);
   }
 
   button_click(value: number) {

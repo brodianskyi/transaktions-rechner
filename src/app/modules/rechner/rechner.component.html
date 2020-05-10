@@ -115,8 +115,8 @@
                         <em> Likert: 1 (Standardisiert) bis 5 (Hochkomplex) </em>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
-                                <!--<div *ngFor="let variable of "></div> -->
-                                <h3>Var#{{number_of_variables+1}} </h3>
+                                <!--<h3>Var#{{number_of_variables+1}} </h3>-->
+                                <h3>Var# {{daten_domain.key}}.{{number_of_data_sets+1}}.{{number_of_variables+1}}</h3>
                                 <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
                                 {{variable_slider.value}}
                             </div>
@@ -124,10 +124,9 @@
                         <h3>Einzelpreis Variablen</h3>
                         <em>Preise in Euro</em>
                         <div class="preise" fxLayout="row" fxLayoutAlign="space-evenly center">
-                            <!-- <div *ngFor="let variable of variables_arr; let number_of_variables = index"> -->
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
                                 <mat-form-field appearance="fill" class="title-textfield">
-                                    <mat-label>Var#{{number_of_variables+1}}</mat-label><input #dd_variables matInput
+                                    <mat-label>Var# {{daten_domain.key}}.{{number_of_data_sets+1}}.{{number_of_variables+1}}</mat-label><input #dd_variables matInput
                                         (change)="data_domain_var(daten_domain.key, number_of_data_sets+1, number_of_variables+1, dd_variables.value)"
                                         value="0.00">
                                 </mat-form-field>
@@ -149,14 +148,14 @@
             <mat-card-content>
                 <div *ngFor="let analyse of  analysen_map | keyvalue; let number_analysen = index">
                     <h2> AN#{{analyse.key}} </h2>
-                    <div class="preise" fxLayout="row" fxLayoutAlign="space-evenly center">
+                    <div class="preise" fxLayout="row" fxLayoutAlign="space-around center">
                         <div *ngFor="let algorithm of analyse.value; let number_of_algorithms = index">
                             <h3> AL#{{number_of_algorithms+1}} </h3>
-                            <div fxLayout="row" fxLayoutAlign="space-around center">
-                                <div *ngFor="let variable of variables_arr; let number_variable = index">
+                            <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                                <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index">
                                     <mat-checkbox
                                         (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
-                                        class="checkbox_algorithms"> VAR#{{number_variable+1}} </mat-checkbox>
+                                        class="checkbox_algorithms"> VAR# {{variable}} </mat-checkbox>
                                 </div>
                             </div>
                         </div>
