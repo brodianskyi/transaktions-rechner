@@ -115,7 +115,6 @@
                         <em> Likert: 1 (Standardisiert) bis 5 (Hochkomplex) </em>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
-                                <!--<h3>Var#{{number_of_variables+1}} </h3>-->
                                 <h3>Var# {{daten_domain.key}}.{{number_of_data_sets+1}}.{{number_of_variables+1}}</h3>
                                 <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
                                 {{variable_slider.value}}
@@ -123,7 +122,7 @@
                         </div>
                         <h3>Einzelpreis Variablen</h3>
                         <em>Preise in Euro</em>
-                        <div class="preise" fxLayout="row" fxLayoutAlign="space-evenly center">
+                        <div class="padding-cont" fxLayout="row" fxLayoutAlign="space-evenly center">
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
                                 <mat-form-field appearance="fill" class="title-textfield">
                                     <mat-label>Var#
@@ -139,7 +138,7 @@
                     <hr class="main" noshade>
                 </div>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button mat-raised-button class="save-button">Eingaben Feld 1 speichern</button>
+                    <button mat-raised-button class="save-button">Eingaben Feld 1 kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
@@ -150,10 +149,10 @@
             <mat-card-content>
                 <div *ngFor="let analyse of  analysen_map | keyvalue; let number_analysen = index">
                     <h2> AN#{{analyse.key}} </h2>
-                    <div class="preise" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px"
-                        fxLayoutAlign="flex-start">
+                    <div class="padding-cont" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px"
+                        fxLayoutAlign="start stretch">
                         <ng-container *ngFor="let algorithm of analyse.value; let number_of_algorithms = index">
-                            <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
+                            <div class="padding-cont" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
                                 fxFlex.lt-sm="100%">
                                 <h3> AL#{{number_of_algorithms+1}} </h3>
                                 <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
@@ -162,6 +161,16 @@
                                             (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
                                             class="checkbox_algorithms"> VAR# {{variable}} </mat-checkbox>
                                     </div>
+                                    <h3> Komplexität Variable AL# {{number_of_algorithms+1}} </h3>
+                                    <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
+                                    {{variable_slider.value}}
+                                    <h3>Preis in Euro</h3>
+                                    <mat-form-field appearance="fill" class="title-textfield">
+                                        <mat-label> AN#{{analyse.key}} AL#{{number_of_algorithms+1}}
+                                        </mat-label><input #al_preis matInput
+                                            (change)="algorithms_preis(analyse.key, number_of_algorithms+1, al_preis.value)"
+                                            value="0.00">
+                                    </mat-form-field>
                                 </div>
                             </div>
                         </ng-container>
@@ -170,7 +179,7 @@
                 </div>
                 <hr class="main" noshade>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button mat-raised-button class="save-button">Eingaben Feld 2 speichern</button>
+                    <button mat-raised-button class="save-button">Eingaben Feld 2 kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
@@ -188,10 +197,13 @@
                 </div>
                 <hr class="main" noshade>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button mat-raised-button class="save-button">Eingaben Feld 3 speichern</button>
+                    <button mat-raised-button class="save-button">Eingaben Feld 3 kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
+        </mat-card>
+        <mat-card class="card">
+            <h1> Finale Berechnung der Cross-Domain Koordinationskosten </h1>  
         </mat-card>
     </div>
 </div>

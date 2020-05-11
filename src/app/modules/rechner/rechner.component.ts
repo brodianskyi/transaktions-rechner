@@ -105,6 +105,11 @@ export class RechnerComponent {
     console.log("analysen_map", this.analysen_map);
   }
 
+
+  algorithms_preis(analyse_key: number, number_of_algorithms: number, al_preis: number) {
+     console.log("analyse_key", analyse_key, "number_of_algorithms", number_of_algorithms, "al_preis", al_preis);
+  }
+
   // --------Data Domain------------
   number_data_domains(n_data_domains: number) {
     this.height = n_data_domains * 50;
