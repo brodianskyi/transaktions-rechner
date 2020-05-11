@@ -73,7 +73,7 @@
                         <h3> Anzahl Algorithmen für AN#{{analyse_number+1}} </h3>
                         <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                             <mat-form-field appearance="fill" class="title-textfield">
-                                <input #input_algorithmen matInput type="number" value="2" min="1">
+                                <input #input_algorithmen matInput type="number" value="3" min="1">
                             </mat-form-field>
                             <button (click)="number_algorithms(analyse_number+1, input_algorithmen.value)"
                                 mat-raised-button class="title-button">Anlegen</button>
@@ -126,7 +126,9 @@
                         <div class="preise" fxLayout="row" fxLayoutAlign="space-evenly center">
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
                                 <mat-form-field appearance="fill" class="title-textfield">
-                                    <mat-label>Var# {{daten_domain.key}}.{{number_of_data_sets+1}}.{{number_of_variables+1}}</mat-label><input #dd_variables matInput
+                                    <mat-label>Var#
+                                        {{daten_domain.key}}.{{number_of_data_sets+1}}.{{number_of_variables+1}}
+                                    </mat-label><input #dd_variables matInput
                                         (change)="data_domain_var(daten_domain.key, number_of_data_sets+1, number_of_variables+1, dd_variables.value)"
                                         value="0.00">
                                 </mat-form-field>
@@ -148,17 +150,21 @@
             <mat-card-content>
                 <div *ngFor="let analyse of  analysen_map | keyvalue; let number_analysen = index">
                     <h2> AN#{{analyse.key}} </h2>
-                    <div class="preise" fxLayout="row" fxLayoutAlign="space-around center">
-                        <div *ngFor="let algorithm of analyse.value; let number_of_algorithms = index">
-                            <h3> AL#{{number_of_algorithms+1}} </h3>
-                            <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-                                <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index">
-                                    <mat-checkbox
-                                        (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
-                                        class="checkbox_algorithms"> VAR# {{variable}} </mat-checkbox>
+                    <div class="preise" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px"
+                        fxLayoutAlign="flex-start">
+                        <ng-container *ngFor="let algorithm of analyse.value; let number_of_algorithms = index">
+                            <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
+                                fxFlex.lt-sm="100%">
+                                <h3> AL#{{number_of_algorithms+1}} </h3>
+                                <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                                    <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index">
+                                        <mat-checkbox
+                                            (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
+                                            class="checkbox_algorithms"> VAR# {{variable}} </mat-checkbox>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </div>
                     <hr class="between" noshade>
                 </div>

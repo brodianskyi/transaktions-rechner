@@ -14,9 +14,9 @@ export class RechnerComponent {
   variables_arr = new Array(3);
   data_domain_id: number = 1;
   // -------Amalyse-----------------
-  analysen_map = new Map([[1, new Array(2)]]);
+  analysen_map = new Map([[1, new Array(3)]]);
   analysen_arr = new Array(1);
-  algorithms_arr = new Array(2);
+  algorithms_arr = new Array(3);
   variables_arr_anlysen =
     ["1.1.1", "1.1.2", "1.1.3",
       "2.1.1", "2.1.2", "2.1.3"];
@@ -78,7 +78,7 @@ export class RechnerComponent {
     let analysen_map = new Map();
     let map_length = Number(n_analysen) + 1;
     for (let i = 1; i < map_length; i++) {
-      analysen_map.set(i, new Array(2));
+      analysen_map.set(i, new Array(3));
     }
     this.analysen_map = analysen_map;
     console.log("(function number_analysen) analysen_map", this.analysen_map);
