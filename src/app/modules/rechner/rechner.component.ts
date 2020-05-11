@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 
+export interface KoordKosten {
+  feld: number; 
+  kosten: number; 
+  komplex: number;
+}
 
 @Component({
   selector: 'app-rechner',
@@ -29,6 +34,13 @@ export class RechnerComponent {
   //---------------------------------------
   height = 350;
   buffer_height = 0;
+  //------Gesamte Summe---------------------------------
+  displayedColumns: string[] = ["feld", "kosten", "komplex"];
+  gesamt_arr: KoordKosten[] = [
+    {feld: 1, kosten: 0, komplex: 0},
+    {feld: 2, kosten: 5, komplex: 10},
+    {feld: 3, kosten: 12, komplex: 11},
+  ];
 
 
 
@@ -199,9 +211,13 @@ export class RechnerComponent {
     console.log("lllll", value);
   }
 
-  /*
-  track_domain_key(index: any, daten_domain: any) {
-    return index;
+  //------Gesamte Summe---------------------------------  {feld: 1, kosten: 0, komplex: 0},
+  getTotalCost() {
+    return this.gesamt_arr.map(t => t.kosten).reduce((acc, value) => acc + value, 0);
   }
-   */
+
+  getTotalKomplex() {
+    return this.gesamt_arr.map(t => t.komplex).reduce((acc, value) => acc + value, 0);
+  }
+
 }

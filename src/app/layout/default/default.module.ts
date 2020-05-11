@@ -1,4 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeDe, localeDeExtra);
 import { CommonModule } from '@angular/common';
 import { DefaultComponent } from './default.component';
 import { RechnerComponent } from 'src/app/modules/rechner/rechner.component';
@@ -11,7 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +35,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatButtonModule,
     MatDividerModule,
     MatSliderModule,
-    MatCheckboxModule 
-  ]
+    MatCheckboxModule,
+    MatTableModule 
+  ],
+  providers: [{
+    provide: LOCALE_ID,
+    useValue: 'de-DE' 
+  },
+]
 })
 export class DefaultModule { }
