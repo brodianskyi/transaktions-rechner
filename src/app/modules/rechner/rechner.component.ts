@@ -12,39 +12,49 @@ export interface KoordKosten {
   styleUrls: ['./rechner.component.scss']
 })
 export class RechnerComponent {
+  //---------Class Members---------- 
+  //--------------------------------
   // --------Data Domain------------
   data_domain_map = new Map([[1, [new Array(3)]], [2, [new Array(3)]]]);
   daten_domains_arr = new Array(2);
   data_sets_arr = new Array(1);
   variables_arr = new Array(3);
   data_domain_id: number = 1;
+  variables_data_domain_map = new Map(
+    [["1.1.1", 0], ["1.1.2", 0], ["1.1.3", 0],
+    ["2.1.1", 0], ["2.1.2", 0], ["2.1.3", 0]]);
+
   // -------Amalyse-----------------
   analysen_map = new Map([[1, new Array(3)]]);
   analysen_arr = new Array(1);
   algorithms_arr = new Array(3);
-  variables_anlysen_map = new Map(
-    [["1.1.1", 0], ["1.1.2", 0], ["1.1.3", 0],
-    ["2.1.1", 0], ["2.1.2", 0], ["2.1.3", 0]]);
   analysen_id: number = 1;
+  // AN# AL#
+  variables_analysen_map = new Map(
+    [["1.1", 0], ["1.2", 0], ["1.3", 0]]);
+
   // --------Ergebnispräsentationen-----
   ep_map = new Map([[1, new Array(2)]]);
   ep_arr = new Array(1);
   pm_arr = new Array(2);
   ep_id: number = 1;
-  //---------------------------------------
+
+  //------------Height Calculation------
   height = 350;
   buffer_height = 0;
-  //------Gesamte Summe---------------------------------
+
+  //------Total Sum--------------------
   displayedColumns: string[] = ["feld", "kosten", "komplex"];
   gesamt_arr: KoordKosten[] = [
     { feld: 1, kosten: 0, komplex: 0 },
     { feld: 2, kosten: 0, komplex: 0 },
     { feld: 3, kosten: 0, komplex: 0 },
   ];
+  //----------------------------------------
+  //----------End Class Members-------------
 
 
-
-  constructor() { }
+  constructor() { console.log("----KOstruktor-------"); }
 
   // --------Ergebnispräsentationen-----
   number_ep(n_ep: number) {
@@ -80,12 +90,14 @@ export class RechnerComponent {
     console.log("Ergeb_psentation_map", this.ep_map);
   }
 
-  // -------Amalyse-----------------
+
+  //------------------------------------------------------
+  // -------Analyse---------------------------------------
   number_analysen(n_analysen: number) {
-    //console.log("kol_vo analysen", n_analysen);
     this.height = n_analysen * 50;
     this.height += 290;
     this.buffer_height = this.height;
+    //---------------------------------------------------
     this.analysen_arr.length = n_analysen;
     let analysen_map = new Map();
     let map_length = Number(n_analysen) + 1;
@@ -93,19 +105,16 @@ export class RechnerComponent {
       analysen_map.set(i, new Array(3));
     }
     this.analysen_map = analysen_map;
-    console.log("(function number_analysen) analysen_map", this.analysen_map);
+    this.set_analysen_variable_numbers(this.analysen_map);
   }
 
   number_algorithms(analyse: number, n_algorithms: number) {
     this.height = this.buffer_height + Number(n_algorithms) * 70;
-    //console.log("#analyse", analyse, "kolvo algorithms", n_algorithms);
     this.analysen_id = analyse;
     let arr = this.analysen_map.get(analyse);
-    //console.log("arr", arr);
     n_algorithms = Number(n_algorithms);
     arr.length = n_algorithms;
     this.algorithms_arr.length = arr.length;
-    //console.log("algorithms_arr.length", this.algorithms_arr.length);
     for (let i = 0; i < arr.length; i++) {
       if (arr[i]) {
 
@@ -115,14 +124,40 @@ export class RechnerComponent {
     }
     this.analysen_map.set(analyse, arr);
     console.log("analysen_map", this.analysen_map);
+    this.set_analysen_variable_numbers(this.analysen_map);
+  }
+  
+  set_analysen_variable_numbers(buff_map: Map<any, any>) {
+    let variables_analysen_map = new Map();
+    let buff_string = "";
+    let count_al = 0;
+    for (let [key, value] of buff_map) {
+      count_al = 0;
+      for (let algorithm of value) {
+         count_al++;
+         buff_string = String(key) + "." + String(count_al);
+         variables_analysen_map.set(buff_string, 0);
+      }
+    }
+    this.variables_analysen_map = variables_analysen_map;
   }
 
-
-  algorithms_preis(analyse_key: number, number_of_algorithms: number, al_preis: number) {
-    console.log("analyse_key", analyse_key, "number_of_algorithms", number_of_algorithms, "al_preis", al_preis);
+  analysen_var(analysen_key: number, number_of_algorithms: number, al_preis: number) {
+    let analyse_variable_id = String(analysen_key) + "." + String(number_of_algorithms);
+    this.variables_analysen_map.set(analyse_variable_id, Number(al_preis));
+    console.log("****variables_analysen_map ", this.variables_analysen_map);
   }
 
-  // --------Data Domain------------
+  analysen_sum_kosten() {
+     let sum = 0;
+     for (let value of this.variables_analysen_map.values()) {
+       sum += value;
+     }
+     this.gesamt_arr[1].kosten = sum;
+  }
+
+  //----------------------------------------------------- 
+  // --------Data Domain---------------------------------
   number_data_domains(n_data_domains: number) {
     this.height = n_data_domains * 50;
     this.height += 290;
@@ -136,14 +171,43 @@ export class RechnerComponent {
       data_domain_map.set(i, [buff_arr]);
     }
     this.data_domain_map = data_domain_map;
-    this.set_variable_numbers(this.data_domain_map);
-    // console.log("(function number_data_domain) data_domain map", this.data_domain_map);
+    this.set_data_domain_variable_numbers(this.data_domain_map);
   }
 
-  // new Map([[1, [new Array(3)]], [2, [new Array(3)]]])
-  set_variable_numbers(buff_map: Map<any, any>) {
-    console.log("***********************************");
-    let variables_anlysen_map = new Map<any, any>();
+  number_data_sets(data_domain: number, n_data_sets: number) {
+    this.height = this.buffer_height + Number(n_data_sets) * 70;
+    this.data_domain_id = data_domain;
+    let arr = this.data_domain_map.get(data_domain);
+    n_data_sets = Number(n_data_sets);
+    arr.length = n_data_sets;
+    this.data_sets_arr.length = arr.length;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i]) {
+      } else {
+        arr[i] = new Array(3);
+      }
+    }
+    this.data_domain_map.set(data_domain, arr);
+    this.set_data_domain_variable_numbers(this.data_domain_map);
+  }
+
+  number_variables(n_domain: number, n_data_set: number, n_variables: number) {
+    console.log("#domain", n_domain, "#n_data_set", n_data_set + 1, "kol_vo_variables", n_variables);
+    let arr = this.data_domain_map.get(n_domain);
+    arr[n_data_set] = new Array(Number(n_variables));
+    //console.log("final array", arr);
+    this.data_domain_map.set(n_domain, arr)
+    console.log("data_set_map", this.data_domain_map);
+    this.set_data_domain_variable_numbers(this.data_domain_map);
+  }
+  
+  /*
+  checkbox_algorithms(analyse: number, algorithm: number, variable: number, event: any) {
+    console.log("analyse_id=", analyse, "algorithmus_id=", algorithm, "var_id=", variable, "is checked=", event.checked);
+  } */
+
+  set_data_domain_variable_numbers(buff_map: Map<any, any>) {
+    let variables_data_domain_map = new Map();
     let buff_string = "";
     let count_ds = 0, count_var = 0;
     for (let [key, value] of buff_map) {
@@ -153,76 +217,29 @@ export class RechnerComponent {
         for (let variable of data_set) {
           count_var++;
           buff_string = String(key) + "." + String(count_ds) + "." + String(count_var);
-          variables_anlysen_map.set(buff_string, 0);
+          variables_data_domain_map.set(buff_string, 0);
         }
       }
     }
-    this.variables_anlysen_map = variables_anlysen_map;
-    console.log("--", this.variables_anlysen_map);
-  }
-
-  number_data_sets(data_domain: number, n_data_sets: number) {
-    this.height = this.buffer_height + Number(n_data_sets) * 70;
-    //console.log("--height", this.height);
-    //console.log("#data_domain", data_domain, "kolvo data sets", n_data_sets);
-    this.data_domain_id = data_domain;
-    let arr = this.data_domain_map.get(data_domain);
-    //console.log("arr", arr);
-    n_data_sets = Number(n_data_sets);
-    arr.length = n_data_sets;
-    this.data_sets_arr.length = arr.length;
-    //console.log("data_sets_arr.length", this.data_sets_arr.length);
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i]) {
-        //console.log("i", i, "arr[i]", arr[i]);
-      } else {
-        arr[i] = new Array(3);
-        //console.log("arr[i]", i, "arr[i]", arr[i]);
-      }
-    }
-    this.data_domain_map.set(data_domain, arr);
-    this.set_variable_numbers(this.data_domain_map);
-    //console.log("data_set_map", this.data_domain_map);
-  }
-
-  number_variables(n_domain: number, n_data_set: number, n_variables: number) {
-    console.log("#domain", n_domain, "#n_data_set", n_data_set + 1, "kol_vo_variables", n_variables);
-    this.variables_arr
-    //console.log("data_set_map",  this.data_domain_map);
-    let arr = this.data_domain_map.get(n_domain);
-    //console.log("array in variables", arr);
-    //console.log("change length of arr to", arr.length);
-    arr[n_data_set] = new Array(Number(n_variables));
-    //console.log("final array", arr);
-    this.data_domain_map.set(n_domain, arr)
-    console.log("data_set_map", this.data_domain_map);
-    this.set_variable_numbers(this.data_domain_map);
-  }
-  // event.checked
-  checkbox_algorithms(analyse: number, algorithm: number, variable: number, event: any) {
-    console.log("analyse_id=", analyse, "algorithmus_id=", algorithm, "var_id=", variable, "is checked=", event.checked);
+    this.variables_data_domain_map = variables_data_domain_map;
+    //console.log("--", this.variables_data_domain_map);
   }
 
   data_domain_var(daten_domain: number, data_set: number, variable: number, dd_value: number) {
     let domain_variable_id = String(daten_domain) + "." + String(data_set) + "." + String(variable);
-    console.log("domain_variable_id=", domain_variable_id);
-    this.variables_anlysen_map.set(domain_variable_id, Number(dd_value));
-    console.log("-- set prise for variables_anlysen_map", this.variables_anlysen_map);
+    this.variables_data_domain_map.set(domain_variable_id, Number(dd_value));
   }
 
-  sum_kosten() {
+  data_domain_sum_kosten() {
     let sum = 0;
-    for (let value of this.variables_anlysen_map.values()) {
+    for (let value of this.variables_data_domain_map.values()) {
       sum += value;
     }
     this.gesamt_arr[0].kosten = sum;
   }
 
-  button_click(value: number) {
-    console.log("lllll", value);
-  }
-
-  //------Gesamte Summe---------------------------------  {feld: 1, kosten: 0, komplex: 0},
+  //------------------------------------------------
+  //------Total Sum--------------------------------- 
   getTotalCost() {
     return this.gesamt_arr.map(t => t.kosten).reduce((acc, value) => acc + value, 0);
   }

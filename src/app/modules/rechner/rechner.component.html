@@ -138,7 +138,7 @@
                     <hr class="main" noshade>
                 </div>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button (click)="sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 1 kalkulieren</button>
+                    <button (click)="data_domain_sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 1 kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
@@ -157,7 +157,7 @@
                                 <h3> AL#{{number_of_algorithms+1}} </h3>
                                 <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
                                     <!-- <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index"> -->
-                                    <div *ngFor="let variable of variables_anlysen_map | keyvalue; let number_variable = index">
+                                    <div *ngFor="let variable of variables_data_domain_map | keyvalue; let number_variable = index">
                                         <mat-checkbox
                                             (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
                                             class="checkbox_algorithms"> VAR# {{variable.key}} </mat-checkbox>
@@ -169,7 +169,7 @@
                                     <mat-form-field appearance="fill" class="title-textfield">
                                         <mat-label> AN#{{analyse.key}} AL#{{number_of_algorithms+1}}
                                         </mat-label><input #al_preis matInput
-                                            (change)="algorithms_preis(analyse.key, number_of_algorithms+1, al_preis.value)"
+                                            (change)="analysen_var(analyse.key, number_of_algorithms+1, al_preis.value)"
                                             value="0.00">
                                     </mat-form-field>
                                 </div>
@@ -180,7 +180,7 @@
                 </div>
                 <hr class="main" noshade>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button mat-raised-button class="save-button">Eingaben Feld 2 kalkulieren</button>
+                    <button (click)="analysen_sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 2 kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
