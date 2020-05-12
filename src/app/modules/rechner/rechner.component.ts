@@ -22,9 +22,9 @@ export class RechnerComponent {
   analysen_map = new Map([[1, new Array(3)]]);
   analysen_arr = new Array(1);
   algorithms_arr = new Array(3);
-  variables_arr_anlysen =
-    ["1.1.1", "1.1.2", "1.1.3",
-      "2.1.1", "2.1.2", "2.1.3"];
+  variables_anlysen_map = new Map(
+    [["1.1.1", 0], ["1.1.2", 0], ["1.1.3", 0],
+     ["2.1.1", 0], ["2.1.2", 0], ["2.1.3", 0]]);
   analysen_id: number = 1;
   // --------Ergebnispräsentationen-----
   ep_map = new Map([[1, new Array(2)]]);
@@ -38,9 +38,12 @@ export class RechnerComponent {
   displayedColumns: string[] = ["feld", "kosten", "komplex"];
   gesamt_arr: KoordKosten[] = [
     {feld: 1, kosten: 0, komplex: 0},
-    {feld: 2, kosten: 5, komplex: 10},
-    {feld: 3, kosten: 12, komplex: 11},
+    {feld: 2, kosten: 0, komplex: 0},
+    {feld: 3, kosten: 0, komplex: 0},
   ];
+
+  koordinat_sum = 0;
+  komplex_sum = 0;
 
 
 
@@ -143,7 +146,8 @@ export class RechnerComponent {
   // new Map([[1, [new Array(3)]], [2, [new Array(3)]]])
   set_variable_numbers(buff_map: Map<any, any>) {
     console.log("***********************************");
-    let buff_arr = new Array();
+    let variables_anlysen_map= new Map();
+    let buff_string = "";
     let count_ds = 0, count_var = 0;
     for (let [key, value] of buff_map) {
       count_ds = 0, count_var = 0;
@@ -151,14 +155,13 @@ export class RechnerComponent {
         count_ds++; count_var = 0;
         for (let variable of data_set) {
           count_var++;
-          //console.log(String(key)+"."+String(count_ds)+"."+String(count_var));
-          buff_arr.push(String(key)+"."+String(count_ds)+"."+String(count_var));
-          //variables_arr_anlysen.push(String(key+"."+i));   
+          buff_string = String(key)+"."+String(count_ds)+"."+String(count_var);
+          variables_anlysen_map.set(buff_string, 0); 
         }
       }
     }
-    this.variables_arr_anlysen = buff_arr;
-    console.log("--", this.variables_arr_anlysen);
+    this.variables_anlysen_map = variables_anlysen_map;
+    console.log("--", this.variables_anlysen_map);
   }
 
   number_data_sets(data_domain: number, n_data_sets: number) {
@@ -204,7 +207,10 @@ export class RechnerComponent {
   }
 
   data_domain_var(daten_domain: number, data_set: number, variable: number, dd_value: number) {
-    //console.log("daten_domain = ", daten_domain, "data_set=", data_set, "variable_number", variable, "value", dd_value);
+    console.log("daten_domain = ", daten_domain, "data_set=", data_set, "variable_number", variable, "value", dd_value);
+    let text_fiel_id = String(daten_domain)+"."+String(data_set)+"."+String(variable);
+    
+    this.komplex_sum += dd_value;
   }
 
   button_click(value: number) {

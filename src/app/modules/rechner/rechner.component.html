@@ -156,10 +156,11 @@
                                 fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
                                 <h3> AL#{{number_of_algorithms+1}} </h3>
                                 <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-                                    <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index">
+                                    <!-- <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index"> -->
+                                    <div *ngFor="let variable of variables_anlysen_map | keyvalue; let number_variable = index">
                                         <mat-checkbox
                                             (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
-                                            class="checkbox_algorithms"> VAR# {{variable}} </mat-checkbox>
+                                            class="checkbox_algorithms"> VAR# {{variable.key}} </mat-checkbox>
                                     </div>
                                     <h3> Komplexität Variable AL# {{number_of_algorithms+1}} </h3>
                                     <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
@@ -205,28 +206,28 @@
         <mat-card class="table-card">
             <h1 class="table-title"> Finale Berechnung der Cross-Domain Koordinationskosten und der Komplexitäten</h1>
             <table mat-table [dataSource]="gesamt_arr" class="mat-elevation-z8">
-             <!-- Feld Column -->
-             <ng-container matColumnDef="feld">
-                <th mat-header-cell *matHeaderCellDef> Item </th>  
-                <td mat-cell *matCellDef="let cell"> {{cell.feld}} </td>
-                <td mat-footer-cell *matFooterCellDef> Gesamtbetrag </td>
-             </ng-container>
-              <!-- Kosten Column -->
-              <ng-container matColumnDef="kosten">
-                <th mat-header-cell *matHeaderCellDef> Item </th>
-                <td mat-cell *matCellDef="let cell"> {{cell.kosten | currency:'EUR':true  }} </td>
-                <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency:'EUR':true  }} </td>
-              </ng-container>
-               <!-- Komplexitäten Column -->
-               <ng-container matColumnDef="komplex">
-                <th mat-header-cell *matHeaderCellDef> Item </th>
-                <td mat-cell *matCellDef="let cell"> {{cell.komplex}} </td>
-                <td mat-footer-cell *matFooterCellDef> {{getTotalKomplex()}} </td>
-              </ng-container>
+                <!-- Feld Column -->
+                <ng-container matColumnDef="feld">
+                    <th mat-header-cell *matHeaderCellDef> Feld# </th>
+                    <td mat-cell *matCellDef="let cell"> {{cell.feld}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Gesamtbetrag </td>
+                </ng-container>
+                <!-- Kosten Column -->
+                <ng-container matColumnDef="kosten">
+                    <th mat-header-cell *matHeaderCellDef> Koordinationskosten </th>
+                    <td mat-cell *matCellDef="let cell"> {{cell.kosten | currency:'EUR':true  }} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency:'EUR':true  }} </td>
+                </ng-container>
+                <!-- Komplexitäten Column -->
+                <ng-container matColumnDef="komplex">
+                    <th mat-header-cell *matHeaderCellDef> Komplexitäten </th>
+                    <td mat-cell *matCellDef="let cell"> {{cell.komplex}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalKomplex()}} </td>
+                </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
             </table>
         </mat-card>
     </div>
