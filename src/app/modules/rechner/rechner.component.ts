@@ -90,6 +90,11 @@ export class RechnerComponent {
     console.log("Ergeb_psentation_map", this.ep_map);
   }
 
+  present_var(erg_present: number, present_modul: number, pm_preis: number) {
+      let erg_present_variable_id = String(erg_present) + "." + String(present_modul);
+      console.log("---present_var", erg_present_variable_id);     
+  }
+
 
   //------------------------------------------------------
   // -------Analyse---------------------------------------

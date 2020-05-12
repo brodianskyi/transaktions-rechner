@@ -116,8 +116,8 @@
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <div *ngFor="let variable of data_set; let number_of_variables = index">
                                 <h3>Var# {{daten_domain.key}}.{{number_of_data_sets+1}}.{{number_of_variables+1}}</h3>
-                                <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
-                                {{variable_slider.value}}
+                                <mat-slider #variable_slider_datendomain min="1" max="5" step="1" value="3"></mat-slider>
+                                {{variable_slider_datendomain.value}}
                             </div>
                         </div>
                         <h3>Einzelpreis Variablen</h3>
@@ -138,7 +138,8 @@
                     <hr class="main" noshade>
                 </div>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button (click)="data_domain_sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 1 kalkulieren</button>
+                    <button (click)="data_domain_sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 1
+                        kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
@@ -156,15 +157,15 @@
                                 fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
                                 <h3> AL#{{number_of_algorithms+1}} </h3>
                                 <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-                                    <!-- <div *ngFor="let variable of variables_arr_anlysen; let number_variable = index"> -->
-                                    <div *ngFor="let variable of variables_data_domain_map | keyvalue; let number_variable = index">
+                                    <div
+                                        *ngFor="let variable of variables_data_domain_map | keyvalue; let number_variable = index">
                                         <mat-checkbox
                                             (change)="checkbox_algorithms(analyse.key, number_of_algorithms+1, number_variable+1, $event)"
-                                            class="checkbox_algorithms"> VAR# {{variable.key}} </mat-checkbox>
+                                            class="checkbox-cont"> VAR# {{variable.key}} </mat-checkbox>
                                     </div>
                                     <h3> Komplexität Variable AL# {{number_of_algorithms+1}} </h3>
-                                    <mat-slider #variable_slider min="1" max="5" step="1" value="3"></mat-slider>
-                                    {{variable_slider.value}}
+                                    <mat-slider #variable_slider_analysen min="1" max="5" step="1" value="3"></mat-slider>
+                                    {{variable_slider_analysen.value}}
                                     <h3>Preis in Euro</h3>
                                     <mat-form-field appearance="fill" class="title-textfield">
                                         <mat-label> AN#{{analyse.key}} AL#{{number_of_algorithms+1}}
@@ -180,7 +181,8 @@
                 </div>
                 <hr class="main" noshade>
                 <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center">
-                    <button (click)="analysen_sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 2 kalkulieren</button>
+                    <button (click)="analysen_sum_kosten()" mat-raised-button class="save-button">Eingaben Feld 2
+                        kalkulieren</button>
                     <button mat-raised-button class="save-button">Reset</button>
                 </div>
             </mat-card-content>
@@ -191,8 +193,30 @@
             <mat-card-content>
                 <div *ngFor="let ep of ep_map | keyvalue; let number_ep = index">
                     <h2>EP#{{ep.key}}</h2>
-                    <div *ngFor="let pm of ep.value; let number_of_pm = index">
-                        <h3> PM#{{number_of_pm+1}} </h3>
+                    <div class="padding-cont" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px"
+                        fxLayoutAlign="start stretch">
+                        <ng-container *ngFor="let pm of ep.value; let number_of_pm = index">
+                            <div class="padding-cont" fxFlex="0 1 calc(33.3% - 32px)"
+                                fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+                                <h3> PM#{{number_of_pm+1}} </h3>
+                                <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                                    <div
+                                        *ngFor="let variable of variables_analysen_map | keyvalue; let number_variable = index">
+                                        <mat-checkbox class="checkbox-cont">AL# {{variable.key}}</mat-checkbox>
+                                    </div>
+                                    <h3> Komplexität Variable PM# {{number_of_pm+1}} </h3>
+                                    <mat-slider #variable_slider_present min="1" max="5" step="1" value="3"></mat-slider>
+                                    {{variable_slider_present.value}}
+                                    <h3>Preis in Euro</h3>
+                                    <mat-form-field appearance="fill" class="title-textfield">
+                                        <mat-label> EP#{{ep.key}} PM#{{number_of_pm+1}} 
+                                        </mat-label><input #pm_preis matInput
+                                            (change)="present_var(ep.key, number_of_pm+1, pm_preis.value)"
+                                            value="0.00">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
                     <hr class="between" noshade>
                 </div>
