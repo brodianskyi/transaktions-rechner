@@ -1,8 +1,8 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 export interface KoordKosten {
-  feld: number; 
-  kosten: number; 
+  feld: number;
+  kosten: number;
   komplex: number;
 }
 
@@ -24,7 +24,7 @@ export class RechnerComponent {
   algorithms_arr = new Array(3);
   variables_anlysen_map = new Map(
     [["1.1.1", 0], ["1.1.2", 0], ["1.1.3", 0],
-     ["2.1.1", 0], ["2.1.2", 0], ["2.1.3", 0]]);
+    ["2.1.1", 0], ["2.1.2", 0], ["2.1.3", 0]]);
   analysen_id: number = 1;
   // --------Ergebnispräsentationen-----
   ep_map = new Map([[1, new Array(2)]]);
@@ -37,13 +37,10 @@ export class RechnerComponent {
   //------Gesamte Summe---------------------------------
   displayedColumns: string[] = ["feld", "kosten", "komplex"];
   gesamt_arr: KoordKosten[] = [
-    {feld: 1, kosten: 0, komplex: 0},
-    {feld: 2, kosten: 0, komplex: 0},
-    {feld: 3, kosten: 0, komplex: 0},
+    { feld: 1, kosten: 0, komplex: 0 },
+    { feld: 2, kosten: 0, komplex: 0 },
+    { feld: 3, kosten: 0, komplex: 0 },
   ];
-
-  koordinat_sum = 0;
-  komplex_sum = 0;
 
 
 
@@ -122,7 +119,7 @@ export class RechnerComponent {
 
 
   algorithms_preis(analyse_key: number, number_of_algorithms: number, al_preis: number) {
-     console.log("analyse_key", analyse_key, "number_of_algorithms", number_of_algorithms, "al_preis", al_preis);
+    console.log("analyse_key", analyse_key, "number_of_algorithms", number_of_algorithms, "al_preis", al_preis);
   }
 
   // --------Data Domain------------
@@ -131,12 +128,12 @@ export class RechnerComponent {
     this.height += 290;
     this.buffer_height = this.height;
     //----------------------------
-    let buff_arr = new Array(3); 
+    let buff_arr = new Array(3);
     this.daten_domains_arr.length = n_data_domains;
     let data_domain_map = new Map();
     let map_length = Number(n_data_domains) + 1;
     for (let i = 1; i < map_length; i++) {
-        data_domain_map.set(i, [buff_arr]);
+      data_domain_map.set(i, [buff_arr]);
     }
     this.data_domain_map = data_domain_map;
     this.set_variable_numbers(this.data_domain_map);
@@ -146,7 +143,7 @@ export class RechnerComponent {
   // new Map([[1, [new Array(3)]], [2, [new Array(3)]]])
   set_variable_numbers(buff_map: Map<any, any>) {
     console.log("***********************************");
-    let variables_anlysen_map= new Map();
+    let variables_anlysen_map = new Map<any, any>();
     let buff_string = "";
     let count_ds = 0, count_var = 0;
     for (let [key, value] of buff_map) {
@@ -155,8 +152,8 @@ export class RechnerComponent {
         count_ds++; count_var = 0;
         for (let variable of data_set) {
           count_var++;
-          buff_string = String(key)+"."+String(count_ds)+"."+String(count_var);
-          variables_anlysen_map.set(buff_string, 0); 
+          buff_string = String(key) + "." + String(count_ds) + "." + String(count_var);
+          variables_anlysen_map.set(buff_string, 0);
         }
       }
     }
@@ -207,10 +204,18 @@ export class RechnerComponent {
   }
 
   data_domain_var(daten_domain: number, data_set: number, variable: number, dd_value: number) {
-    console.log("daten_domain = ", daten_domain, "data_set=", data_set, "variable_number", variable, "value", dd_value);
-    let text_fiel_id = String(daten_domain)+"."+String(data_set)+"."+String(variable);
-    
-    this.komplex_sum += dd_value;
+    let domain_variable_id = String(daten_domain) + "." + String(data_set) + "." + String(variable);
+    console.log("domain_variable_id=", domain_variable_id);
+    this.variables_anlysen_map.set(domain_variable_id, Number(dd_value));
+    console.log("-- set prise for variables_anlysen_map", this.variables_anlysen_map);
+  }
+
+  sum_kosten() {
+    let sum = 0;
+    for (let value of this.variables_anlysen_map.values()) {
+      sum += value;
+    }
+    this.gesamt_arr[0].kosten = sum;
   }
 
   button_click(value: number) {
