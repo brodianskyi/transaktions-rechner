@@ -43,7 +43,7 @@ export class RechnerComponent {
     [["1.1", 0], ["1.2", 0], ["1.3", 0]]);
 
   //------------Height Calculation------
-  height = 550;
+  height = 430;
   buffer_height = 0;
 
   //------Total Sum--------------------
@@ -61,10 +61,10 @@ export class RechnerComponent {
 
   // --------Ergebnispräsentationen-----
   number_ep(n_ep: number) {
-    console.log("kol_vo ep", n_ep);
-    this.height = n_ep * 50;
-    this.height += 290;
+    this.height = n_ep * 100;
+    this.height += 400;
     this.buffer_height = this.height;
+    //---------------------------------
     this.ep_arr.length = n_ep;
     let ep_map = new Map();
     let map_length = Number(n_ep) + 1;
@@ -76,7 +76,7 @@ export class RechnerComponent {
   }
 
   number_pm(ep: number, n_pm: number) {
-    this.height = this.buffer_height + Number(n_pm) * 70;
+    this.height = this.buffer_height + Number(n_pm) * 90;
     this.ep_id = ep;
     let arr = this.ep_map.get(ep);
     n_pm = Number(n_pm);
@@ -93,9 +93,7 @@ export class RechnerComponent {
     console.log("Ergeb_psentation_map", this.ep_map);
   }
 
-  set_present_variable_numbers(buf_map: Map<any, any>) {
-    let variables_present_map;
-  }
+  set_present_variable_numbers(buf_map: Map<any, any>) {}
 
   present_var(erg_present: number, present_modul: number, pm_preis: number) {
     let erg_present_variable_id = String(erg_present) + "." + String(present_modul);
@@ -106,8 +104,8 @@ export class RechnerComponent {
   //------------------------------------------------------
   // -------Analyse---------------------------------------
   number_analysen(n_analysen: number) {
-    this.height = n_analysen * 50;
-    this.height += 290;
+    this.height = n_analysen * 100;
+    this.height += 300;
     this.buffer_height = this.height;
     //---------------------------------------------------
     this.analysen_arr.length = n_analysen;
@@ -121,7 +119,7 @@ export class RechnerComponent {
   }
 
   number_algorithms(analyse: number, n_algorithms: number) {
-    this.height = this.buffer_height + Number(n_algorithms) * 70;
+    this.height = this.buffer_height + Number(n_algorithms) * 180;
     this.analysen_id = analyse;
     let arr = this.analysen_map.get(analyse);
     n_algorithms = Number(n_algorithms);
@@ -172,7 +170,7 @@ export class RechnerComponent {
   // --------Data Domain---------------------------------
   number_data_domains(n_data_domains: number) {
     this.height = n_data_domains * 50;
-    this.height += 290;
+    this.height += 400;
     this.buffer_height = this.height;
     //----------------------------
     let buff_arr = new Array(3);
@@ -204,7 +202,10 @@ export class RechnerComponent {
   }
 
   number_variables(n_domain: number, n_data_set: number, n_variables: number) {
-    console.log("#domain", n_domain, "#n_data_set", n_data_set + 1, "kol_vo_variables", n_variables);
+    this.height = n_variables * 120;
+    this.height += 150;
+    this.buffer_height = this.height;
+    //--------------------------------------------
     let arr = this.data_domain_map.get(n_domain);
     arr[n_data_set] = new Array(Number(n_variables));
     //console.log("final array", arr);
@@ -234,7 +235,6 @@ export class RechnerComponent {
       }
     }
     this.variables_data_domain_map = variables_data_domain_map;
-    //console.log("--", this.variables_data_domain_map);
   }
 
   data_domain_var(daten_domain: number, data_set: number, variable: number, dd_value: number) {
