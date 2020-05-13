@@ -34,13 +34,16 @@ export class RechnerComponent {
     [["1.1", 0], ["1.2", 0], ["1.3", 0]]);
 
   // --------Ergebnispräsentationen-----
-  ep_map = new Map([[1, new Array(2)]]);
+  ep_map = new Map([[1, new Array(3)]]);
   ep_arr = new Array(1);
-  pm_arr = new Array(2);
+  pm_arr = new Array(3);
   ep_id: number = 1;
+  // EP#1 PM#1
+  variables_present_map = new Map(
+    [["1.1", 0], ["1.2", 0], ["1.3", 0]]);
 
   //------------Height Calculation------
-  height = 350;
+  height = 550;
   buffer_height = 0;
 
   //------Total Sum--------------------
@@ -66,7 +69,7 @@ export class RechnerComponent {
     let ep_map = new Map();
     let map_length = Number(n_ep) + 1;
     for (let i = 1; i < map_length; i++) {
-      ep_map.set(i, new Array(2));
+      ep_map.set(i, new Array(3));
     }
     this.ep_map = ep_map;
     console.log("(function number_ep) ep_map", this.ep_map);
@@ -90,9 +93,13 @@ export class RechnerComponent {
     console.log("Ergeb_psentation_map", this.ep_map);
   }
 
+  set_present_variable_numbers(buf_map: Map<any, any>) {
+    let variables_present_map;
+  }
+
   present_var(erg_present: number, present_modul: number, pm_preis: number) {
-      let erg_present_variable_id = String(erg_present) + "." + String(present_modul);
-      console.log("---present_var", erg_present_variable_id);     
+    let erg_present_variable_id = String(erg_present) + "." + String(present_modul);
+    console.log("---present_var", erg_present_variable_id);
   }
 
 
@@ -131,7 +138,7 @@ export class RechnerComponent {
     console.log("analysen_map", this.analysen_map);
     this.set_analysen_variable_numbers(this.analysen_map);
   }
-  
+
   set_analysen_variable_numbers(buff_map: Map<any, any>) {
     let variables_analysen_map = new Map();
     let buff_string = "";
@@ -139,9 +146,9 @@ export class RechnerComponent {
     for (let [key, value] of buff_map) {
       count_al = 0;
       for (let algorithm of value) {
-         count_al++;
-         buff_string = String(key) + "." + String(count_al);
-         variables_analysen_map.set(buff_string, 0);
+        count_al++;
+        buff_string = String(key) + "." + String(count_al);
+        variables_analysen_map.set(buff_string, 0);
       }
     }
     this.variables_analysen_map = variables_analysen_map;
@@ -154,11 +161,11 @@ export class RechnerComponent {
   }
 
   analysen_sum_kosten() {
-     let sum = 0;
-     for (let value of this.variables_analysen_map.values()) {
-       sum += value;
-     }
-     this.gesamt_arr[1].kosten = sum;
+    let sum = 0;
+    for (let value of this.variables_analysen_map.values()) {
+      sum += value;
+    }
+    this.gesamt_arr[1].kosten = sum;
   }
 
   //----------------------------------------------------- 
@@ -205,11 +212,11 @@ export class RechnerComponent {
     console.log("data_set_map", this.data_domain_map);
     this.set_data_domain_variable_numbers(this.data_domain_map);
   }
-  
-  /*
-  checkbox_algorithms(analyse: number, algorithm: number, variable: number, event: any) {
+
+
+  checkbox_analysen(analyse: number, algorithm: number, variable: number, event: any) {
     console.log("analyse_id=", analyse, "algorithmus_id=", algorithm, "var_id=", variable, "is checked=", event.checked);
-  } */
+  }
 
   set_data_domain_variable_numbers(buff_map: Map<any, any>) {
     let variables_data_domain_map = new Map();
